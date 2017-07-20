@@ -6,10 +6,15 @@ This is a sound recording and reporting kit. Right now, sound is recorded to an 
 
 ## software
 
-You will need:
+For the Teensy:
 - [Arduino IDE](https://www.arduino.cc/en/Main/Software) for writing and uploading sketches
 - [Teensyduino](https://www.pjrc.com/teensy/teensyduino.html) for Arduino to work with Teensy boards
 - [SoX](http://sox.sourceforge.net/) to convert audio. Recommend installing via Homebrew (`brew install sox`)
+
+For the computer:
+- Python 2.*
+- Virtualenv & virtualenvwrapper
+- [pip](https://pip.pypa.io/en/stable/)
 
 ## hardware
 
@@ -20,6 +25,26 @@ You will need:
 - microSD card (ours is 8GB)
 - USB --> MicroUSB cable for connecting Teensy to computer
 - SD card adaptor so microSD card can be read on computer
+- OPTIONAL: ESP8266 WiFi module
+
+## installation
+
+On the host computer, in the project directory, run the following commands to set up your Python environment:
+
+```
+mkvirtualenv sensing
+pip install -r requirements.txt
+```
+
+You should get `pyserial` installed locally in your `sensing` virtual environment.
+
+run `brew install sox` to get SoX on your computer.
+
+You may need to install additional packages in your Arduino environment in order to interface with a Teensy (TODO: document this).
+
+### virtualenvs
+
+To work in your virtualenv, run the command `workon sensing`. To leave, run `deactivate`.
 
 ## project structure
 
