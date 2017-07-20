@@ -36,7 +36,7 @@ mkvirtualenv sensing
 pip install -r requirements.txt
 ```
 
-You should get `pyserial` installed locally in your `sensing` virtual environment.
+This should install `pyserial` locally in your `sensing` virtual environment.
 
 run `brew install sox` to get SoX on your computer.
 
