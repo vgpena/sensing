@@ -20,7 +20,6 @@
 #include <SD.h>
 #include <SerialFlash.h>
 #include <TimeLib.h>
-//#include <string>
 
 // GUItool: begin automatically generated code
 AudioInputI2S            i2s2;           //xy=105,63
@@ -46,16 +45,8 @@ bool ended = false;
 File frec;
 
 void setup() {
-//  setSyncProvider(Teensy3Clock.get());
-  // Configure the pushbutton pins
-//  pinMode(0, INPUT_PULLUP);
-//  pinMode(1, INPUT_PULLUP);
-//  pinMode(2, INPUT_PULLUP);
-
-  // Audio connections require memory, and the record queue
-  // uses this memory to buffer incoming audio.
   AudioMemory(60);
-
+  Serial.begin(9600);
   // Enable the audio shield, select input, and enable output
   sgtl5000_1.enable();
   sgtl5000_1.inputSelect(myInput);
@@ -70,13 +61,14 @@ void setup() {
       Serial.println("Unable to access the SD card");
       delay(500);
     }
-  } else {
-    delay(1000);
-    startRecording();
+//  } else {
+//    delay(1000);
   }
+  startRecording();
 }
 
 #define TIME_HEADER "T"
+int loopNumber = 0;
 
 void loop() {
 //  Serial.println(now());
@@ -92,33 +84,43 @@ void loop() {
   }
   
   int time = millis();
-  if (time < 10000) {
-    continueRecording();
-  } else if (ended == false) {
-    ended = true;
+  int length = 10 * 1000;
+
+  if (time % length == 0) {
     stopRecording();
+    loopNumber++;
+    startRecording();
+  } else {
+    continueRecording();
   }
+  
+//  if (time < 10000) {
+//    continueRecording();
+//  } else if (ended == false) {
+//    ended = true;
+//    stopRecording();
+//  }
 }
 
 void startRecording() {
-  Serial.println("bar");
-//  if (SD.exists("RECORD.RAW")) {
-//    // The SD library writes new data to the end of the
-//    // file, so to start a new recording, the old file
-//    // must be deleted before new data is written.
-//    SD.remove("RECORD.RAW");
-//  }
+  Serial.println('a');
+  char myfilename[12];
+  snprintf(myfilename, 13, "%s.RAW", String(loopNumber).c_str());
+
+  if (SD.exists(myfilename)) {
+    // The SD library writes new data to the end of the
+    // file, so to start a new recording, the old file
+    // must be deleted before new data is written.
+    SD.remove(myfilename);
+  }
 //  int num = random();
 //  int num = Teensy3Clock.get();
 //  int num = now();
 //  Serial.println(String(num) + ".RAW");
 //  Serial.println(month());
-  char myfilename[12];
-//  Serial.begin(9600);
 //  randomSeed(analogRead(13));
-  Serial.println(year());
-  const char *truncated = String(random()).substring(0, 8).c_str();
-  snprintf(myfilename, 13, "%s.RAW", truncated);
+//  Serial.println(year());
+//  const char *truncated = String(random()).substring(0, 8).c_str();
   Serial.println(myfilename);
   frec = SD.open(myfilename, FILE_WRITE);
   Serial.println(frec);
@@ -160,7 +162,6 @@ void continueRecording() {
 }
 
 void stopRecording() {
-  Serial.println("End recording");
 //  Serial.println(String(random()) + ".RAW");
   queue1.end();
 //  if (mode == 1) {
@@ -169,6 +170,7 @@ void stopRecording() {
       queue1.freeBuffer();
     }
     frec.close();
+    Serial.println("End recording");
 //  }
 //  mode = 0;
 }
