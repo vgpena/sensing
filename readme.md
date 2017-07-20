@@ -2,7 +2,7 @@
 
 Made for/with the [PNCA Sensing the Environment Project](http://pnca.edu/makethinkcode/news/c/sensing_the_environment).
 
-This is a sound recording and reporting kit. Right now, sound is recorded to an onboard SD card. Stage 0 will send this info over WiFi to a WebSocket server living on another computer.
+This is a sound recording and reporting kit. Right now, sound is recorded to an onboard SD card. Stage 0 will send this info over USB Serial to a Python server on a host computer.
 
 ## software
 
