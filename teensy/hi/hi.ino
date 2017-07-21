@@ -13,7 +13,15 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()) {
       //Serial.println("hi");
-      light(Serial.read() - '0');
+//      Serial.println(String(Serial.read()).c_str());
+//      Serial.println(5);
+      light(5);
+      String data = Serial.readString();
+//      char str[2];
+//      str[0] = data;
+//      str[1] = '\0';
+      Serial.print(data);
+//      Serial.println(Serial.read() - '0');
   }
 //  
   delay(500);
