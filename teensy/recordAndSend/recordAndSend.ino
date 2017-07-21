@@ -95,8 +95,7 @@ void sendFile() {
     while(frec.available()) {
       Serial.write(frec.read());
     }
-    Serial.write("_");
-    frec.close();
+    Serial.end();
 //    Serial.println("done");
   } else {
     Serial.println("error");
