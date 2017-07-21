@@ -1,5 +1,5 @@
 import serial
-import datetime
+import time
 import os
 
 ser = serial.Serial('/dev/tty.usbmodem3352381', 9600)
@@ -14,10 +14,58 @@ ser = serial.Serial('/dev/tty.usbmodem3352381', 9600)
         # ser.write('3')
 
 # 1. get system time
-date = datetime.datetime.now()
-print(date)
+# date = datetime.now()
+# print(date)
+# timestamp2 = time.mktime(date.timetuple()) # DO NOT USE IT WITH UTC DATE
+# print(datetime.fromtimestamp(timestamp2))
+# print(timestamp2.round())
 # 2. send to Teensy
-ser.write(str(date))
+# ser.write(str(date))
 # 3. to test, send back w/a char added
-while 1:
-    print(ser.read().rstrip('\n'))
+# while 1:
+#     print(ser.read().rstrip('\n'))
+# print(str(int(time.time()))[-8:])
+# startTime = str(int(time.time()))[-8:]
+# ser.write(startTime)
+# file = open("bar.RAW", "w")
+# fileData = bytearray()
+
+with open("raw.RAW", "w") as f:
+    while 1:
+        # data = 'a'
+        # while data != "_":
+        data = ser.read()
+        print(data)
+        f.write(data)
+        # print('b')
+        # f.close()
+        # os.system("./rawToWav.sh raw")
+    # if (data != "_"):
+    #     f.write(data)
+    # else:
+    #     print('b')
+    #     f.close()
+    #     os.system("./rawToWav.sh bar")
+    #     break
+
+# while 1:
+#     data = ser.read()
+#     with open("raw.RAW", "w") as f:
+#         if (data != "_"):
+#             f.write(data)
+#         else:
+#             print('b')
+#             f.close()
+#             os.system("./rawToWav.sh bar")
+#             break
+    # print(ser.read(24).strip())
+    # data = ser.read()
+    # # print(data)
+    # if data != "_":
+    #     file.write(data)
+    #     # fileData.append(data)
+    #     # print('a');
+    # else:
+    #     print('b')
+    #     file.close()
+        # os.system("./rawToWav.sh bar")

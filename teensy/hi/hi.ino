@@ -1,30 +1,48 @@
+#include <TimeLib.h>
+#include <Wire.h>
+#include <DS1307RTC.h>
+
 const int ledPin = 13;
+//RTC_DS1307 rtc;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
+//  setSyncProvider(RTC.get);
+  
   pinMode(ledPin, OUTPUT);
-  //digitalWrite(ledPin, HIGH);
+
+}
+int START_TIME = 0;
+
+unsigned long processSyncMessage() {
+  unsigned long pctime = 0L;
+//  const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013 
+
+//  if(Serial.find(TIME_HEADER)) {
+//     pctime = Serial.parseInt();
+//     return pctime;
+////     if( pctime < DEFAULT_TIME) { // check the value is a valid time (greater than Jan 1 2013)
+////       pctime = 0L; // return 0 to indicate that the time is not valid
+////     }
+//  }
+  return pctime;
 }
 
 
 void loop() {
-  //Serial.println('a');
-  // put your main code here, to run repeatedly:
   if (Serial.available()) {
-      //Serial.println("hi");
-//      Serial.println(String(Serial.read()).c_str());
-//      Serial.println(5);
-      light(5);
-      String data = Serial.readString();
-//      char str[2];
-//      str[0] = data;
-//      str[1] = '\0';
-      Serial.print(data);
-//      Serial.println(Serial.read() - '0');
+    light(5);
+    START_TIME = int(Serial.read()) - '0';
+    Serial.println(START_TIME);
+    if (millis() % 1000 == 0) {
+      START_TIME++;
+    }
+//    time_t time = data;
+//    setTime(time);
+//    Serial.println(now());
   }
 //  
-  delay(500);
+  delay(100);
 }
 
 void light(int numFlashes) {
