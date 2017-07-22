@@ -5,12 +5,6 @@
 //
 // Requires the audio shield:
 //   http://www.pjrc.com/store/teensy3_audio.html
-//
-// Three pushbuttons need to be connected:
-//   Record Button: pin 0 to GND
-//   Stop Button:   pin 1 to GND
-//   Play Button:   pin 2 to GND
-//
 // This example code is in the public domain.
 
 #include <Bounce.h>
@@ -66,24 +60,9 @@ void setup() {
 //    delay(1000);
   }
   startRecording();
-//  recordFile();
 }
 
 File file;
-//
-//void recordFile() {
-//  file = SD.open("test.txt", FILE_WRITE);
-//  if (file) {
-//    Serial.println("writing");
-//    file.println("En un lugar en La Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los que lanza en astrillero, adarga antigua, rocín flaco y galgo corredor.");
-//    file.close();
-//    Serial.println("done");
-//  } else {
-//    Serial.println("error");
-//  }
-//
-//  sendFile();
-//}
 
 void sendFile() {
 //  file = SD.open("test.txt");
@@ -102,18 +81,9 @@ void sendFile() {
   }
 }
 
-#define TIME_HEADER "T"
 int loopNumber = 0;
 
 void loop() {
-//  Serial.println(now());
-//  unsigned long myTime = 0L;
-//  const unsigned long DEFAULT_TIME = 1357041600;
-
-//  if (Serial.find(TIME_HEADER)) {
-//    myTime = Serial.parseInt();
-//    Serial.println(myTime);
-//  }
   if (!frec) {
    return;
   }
@@ -148,15 +118,6 @@ void startRecording() {
     // must be deleted before new data is written.
     SD.remove("0.RAW");
   }
-//  int num = random();
-//  int num = Teensy3Clock.get();
-//  int num = now();
-//  Serial.println(String(num) + ".RAW");
-//  Serial.println(month());
-//  randomSeed(analogRead(13));
-//  Serial.println(year());
-//  const char *truncated = String(random()).substring(0, 8).c_str();
-//  Serial.println(myfilename);
   frec = SD.open("0.RAW", FILE_WRITE);
 //  Serial.println(frec);
   if (frec) {
